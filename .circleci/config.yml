@@ -16,8 +16,10 @@ workflows:
       - orb-tools/pack:
           filters: *filters
       - orb-tools/review:
+          exclude: RC007
           filters: *filters
       - shellcheck/check:
+          exclude: SC2034
           filters: *filters
       - orb-tools/publish:
           orb-name: roost/roost-orb-test-1
@@ -33,3 +35,5 @@ workflows:
           vcs-type: << pipeline.project.type >>
           requires: [orb-tools/publish]
           filters: *filters
+
+# VS Code Extension Version: 1.4.0

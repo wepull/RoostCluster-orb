@@ -1,0 +1,75 @@
+description: >
+  Create a roost cluster.
+parameters:
+  roost_auth_token:
+    type: string
+    description: "Roost Authorization Token"
+  email:
+    type: string
+    description: "User Email"
+  alias:
+    type: string
+    description: "Alias Name"
+  preemptible:
+    type: string
+    enum:
+      - "true"
+      - "false"
+    default: "false"
+    description: "Preemptible Type"
+  k8s_version:
+    type: string
+    default: "1.22.2"
+    description: "Kubernetes Version"
+  cluster_expires_in_hours:
+    type: string
+    default: "1"
+    description: "Cluster Expiration Time ( in Hrs )"
+  num_workers:
+    type: string
+    default: "1"
+    description: "Number Of Worker Nodes"
+  namespace:
+    type: string
+    default: "roost-codesapace"
+    description: "Default Namepace"
+  region:
+    type: string
+    default: "ap-northeast-1"
+    description: "Aws Region"
+  disk_size:
+    type: string
+    default: "50"
+    description: "Disk Size"
+  instance_type:
+    type: string
+    default: "t3.large"
+    description: "Instance Type"
+  ami:
+    type: string
+    default: "ubuntu focal 20.04"
+    description: "Ami"
+  ent_server:
+    type: string
+    default: "app.roost.ai"
+    description: "Enterprise Server IP"
+
+steps:
+  - run:
+      environment:
+        ROOST_AUTH_TOKEN: <<parameters.roost_auth_token>>
+        EMAIL: <<parameters.email>>
+        ALIAS: <<parameters.alias>>
+        PREEMPTIBLE: <<parameters.preemptible>>
+        K8S_VERSION: <<parameters.k8s_version>>
+        CLUSTER_EXPIRY: <<parameters.cluster_expires_in_hours>>
+        NUM_WORKERS: <<parameters.num_workers>>
+        NAMESPACE: <<parameters.namespace>>
+        REGION: <<parameters.region>>
+        DISK_SIZE: <<parameters.disk_size>>
+        INSTANCE_TYPE: <<parameters.instance_type>>
+        AMI: <<parameters.ami>>
+        ENT_SERVER: <<parameters.ent_server>>
+
+      name: Creating a roost cluster with specified parameters
+      command: <<include(scripts/createcluster.sh)>>
