@@ -72,4 +72,4 @@ steps:
         PARAM_ENT_SERVER: << paramerters.ent_server >>
 
       name: Creating a roost cluster with specified paramerters
-      command: <<include(scripts/CreateCluster.sh)>>
+      command: <<include(scripts/createcluster.sh)>>
