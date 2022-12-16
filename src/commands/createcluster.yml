@@ -57,19 +57,19 @@ parameters:
 steps:
   - run:
       environment:
-        PARAM_ROOST_AUTH_TOKEN: <<parameters.roost_auth_token>>
-        PARAM_EMAIL: <<parameters.email>>
-        PARAM_ALIAS: <<parameters.alias>>
-        PARAM_PREEMPTIBLE: <<parameters.preemptible>>
-        PARAM_K8S_VERSION: <<parameters.k8s_version>>
-        PARAM_CLUSTER_EXPIRY: <<parameters.cluster_expires_in_hours>>
-        PARAM_NUM_WORKERS: <<parameters.num_workers>>
-        PARAM_NAMESPACE: <<parameters.namespace>>
-        PARAM_REGION: <<parameters.region>>
-        PARAM_DISK_SIZE: <<parameters.disk_size>>
-        PARAM_INSTANCE_TYPE: <<parameters.instance_type>>
-        PARAM_AMI: <<parameters.ami>>
-        PARAM_ENT_SERVER: <<parameters.ent_server>>
+        ROOST_AUTH_TOKEN: <<parameters.roost_auth_token>>
+        EMAIL: <<parameters.email>>
+        ALIAS: <<parameters.alias>>
+        PREEMPTIBLE: <<parameters.preemptible>>
+        K8S_VERSION: <<parameters.k8s_version>>
+        CLUSTER_EXPIRY: <<parameters.cluster_expires_in_hours>>
+        NUM_WORKERS: <<parameters.num_workers>>
+        NAMESPACE: <<parameters.namespace>>
+        REGION: <<parameters.region>>
+        DISK_SIZE: <<parameters.disk_size>>
+        INSTANCE_TYPE: <<parameters.instance_type>>
+        AMI: <<parameters.ami>>
+        ENT_SERVER: <<parameters.ent_server>>
 
       name: Creating a roost cluster with specified parameters
       command: <<include(scripts/createcluster.sh)>>

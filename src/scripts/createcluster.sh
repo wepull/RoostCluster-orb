@@ -5,7 +5,7 @@ LOG_FILE="${ROOST_DIR}/cluster.log"
 pre_checks() {
   ROOT_DISK_SIZE="${PARAM_DISK_SIZE}GB"
   KUBE_DIR="/home/vscode/.kube"
-  if [ -z "${PARAM_ALIAS}" ]; then
+  if [ -z "${ALIAS}" ]; then
     ALIAS=$(date +%s)
   fi
 }
