@@ -5,7 +5,7 @@ LOG_FILE="${ROOST_DIR}/cluster.log"
 pre_checks() {
   ROOT_DISK_SIZE="${PARAM_DISK_SIZE}GB"
   KUBE_DIR="/home/vscode/.kube"
-  if [ -z ${PARAM_ALIAS} ]; then
+  if [ -z "${PARAM_ALIAS}" ]; then
     ALIAS=$(date +%s)
   fi
 }
@@ -28,7 +28,7 @@ create_cluster() {
     \"ami\": \"${PARAM_AMI}\"
   }" | jq -r '.ResponseCode')
 
-  if [ ${RESPONSE_CODE} -eq 0 ]; then
+  if [ "${RESPONSE_CODE}" -eq 0 ]; then
     sleep 5m
     for i in {1..10}
     do
@@ -107,5 +107,5 @@ if [ ! -d "${ROOST_DIR}" ]; then
    mkdir -p ${ROOST_DIR}
 fi
 
-main $* > ${ROOST_DIR}/roost.log 2>&1
+main "$*" > ${ROOST_DIR}/roost.log 2>&1
 echo "Logs are at ${ROOST_DIR}/roost.log"
