@@ -3,7 +3,7 @@ ROOST_DIR="/var/tmp/Roost"
 LOG_FILE="${ROOST_DIR}/cluster.log"
 
 pre_checks() {
-  ROOT_DISK_SIZE="${PARAM_DISK_SIZE}GB"
+  ROOT_DISK_SIZE="${DISK_SIZE}GB"
   KUBE_DIR="/home/vscode/.kube"
   if [ -z "${ALIAS}" ]; then
     ALIAS=$(date +%s)
@@ -11,21 +11,21 @@ pre_checks() {
 }
 
 create_cluster() {
-  RESPONSE_CODE=$(curl --location --request POST "https://${PARAM_ENT_SERVER}/api/application/client/launchCluster" \
+  RESPONSE_CODE=$(curl --location --request POST "https://${ENT_SERVER}/api/application/client/launchCluster" \
   --header "Content-Type: application/json" \
   --data-raw "{
-    \"roost_auth_token\": \"${PARAM_ROOST_AUTH_TOKEN}\",
+    \"roost_auth_token\": \"${ROOST_AUTH_TOKEN}\",
     \"alias\": \"${ALIAS}\",
-    \"namespace\": \"${PARAM_NAMESPACE}\",
-    \"customer_email\": \"${PARAM_EMAIL}\",
-    \"k8s_version\": \"${PARAM_K8S_VERSION}\",
-    \"num_workers\": ${PARAM_NUM_WORKERS},
-    \"preemptible\": ${PARAM_PREEMPTIBLE},
-    \"cluster_expires_in_hours\": ${PARAM_CLUSTER_EXPIRY},
-    \"region\": \"${PARAM_REGION}\",
+    \"namespace\": \"${NAMESPACE}\",
+    \"customer_email\": \"${EMAIL}\",
+    \"k8s_version\": \"${K8S_VERSION}\",
+    \"num_workers\": ${NUM_WORKERS},
+    \"preemptible\": ${PREEMPTIBLE},
+    \"cluster_expires_in_hours\": ${CLUSTER_EXPIRY},
+    \"region\": \"${REGION}\",
     \"disk_size\": \"${ROOT_DISK_SIZE}\",
-    \"instance_type\": \"$PARAM_INSTANCE_TYPE\",
-    \"ami\": \"${PARAM_AMI}\"
+    \"instance_type\": \"$INSTANCE_TYPE\",
+    \"ami\": \"${AMI}\"
   }" | jq -r '.ResponseCode')
 
   if [ "${RESPONSE_CODE}" -eq 0 ]; then
@@ -48,10 +48,10 @@ get_kubeconfig() {
     mkdir -p ${KUBE_DIR}
   fi
 
-  KUBECONFIG=$(curl --location --request POST "https://${PARAM_ENT_SERVER}/api/application/cluster/getKubeConfig" \
+  KUBECONFIG=$(curl --location --request POST "https://${ENT_SERVER}/api/application/cluster/getKubeConfig" \
   --header "Content-Type: application/json" \
   --data-raw "{
-    \"app_user_id\" : \"${PARAM_ROOST_AUTH_TOKEN}\",
+    \"app_user_id\" : \"${ROOST_AUTH_TOKEN}\",
     \"cluster_alias\" : \"${ALIAS}\"
   }" | jq -r '.kubeconfig')
 
@@ -69,19 +69,19 @@ ACTION=\$*
 main() {
   case \$ACTION in
     stop)
-      curl --location --request POST "https://${PARAM_ENT_SERVER}/api/application/client/stopLaunchedCluster" \
+      curl --location --request POST "https://${ENT_SERVER}/api/application/client/stopLaunchedCluster" \
       --header "Content-Type: application/json" \
       --data-raw "{
-        \"roost_auth_token\": \"${PARAM_ROOST_AUTH_TOKEN}\",
+        \"roost_auth_token\": \"${ROOST_AUTH_TOKEN}\",
         \"alias\": \"${ALIAS}\"
       }"
       sudo rm -f "${KUBE_DIR}/config"
       ;;
     delete)
-      curl --location --request POST "https://${PARAM_ENT_SERVER}/api/application/client/deleteLaunchedCluster" \
+      curl --location --request POST "https://${ENT_SERVER}/api/application/client/deleteLaunchedCluster" \
       --header "Content-Type: application/json" \
       --data-raw "{
-        \"roost_auth_token\": \"${PARAM_ROOST_AUTH_TOKEN}\",
+        \"roost_auth_token\": \"${ROOST_AUTH_TOKEN}\",
         \"alias\": \"${ALIAS}\"
       }"
       sudo rm -f "${KUBE_DIR}/config"
