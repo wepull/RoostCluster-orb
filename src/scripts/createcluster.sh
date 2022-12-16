@@ -1,3 +1,3 @@
 #!/bin/bash
 echo "${TEST}"
-echo "${ALIAS}"
+echo "${ROOST_AUTH_TOKEN}"
