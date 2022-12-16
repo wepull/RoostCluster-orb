@@ -3,12 +3,15 @@ description: >
 parameters:
   roost_auth_token:
     type: string
+    default: "test"
     description: "Roost Authorization Token"
   email:
     type: string
+    default: "test"
     description: "User Email"
   alias:
     type: string
+    default: "test"
     description: "Alias Name"
   preemptible:
     type: string
