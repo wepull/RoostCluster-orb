@@ -1,0 +1,75 @@
+description: >
+  Create a roost cluster.
+parameters:
+  roost_auth_token:
+    type: string
+    description: "Roost Authorization Token"
+  email:
+    type: string
+    description: "User Email"
+  alias:
+    type: string
+    description: "Alias Name"
+  preemptible:
+    type: string
+    enum:
+      - "true"
+      - "false"
+    default: "false"
+    description: "Preemptible Type"
+  k8s_version:
+    type: string
+    default: "1.22.2"
+    description: "Kubernetes Version"
+  cluster_expires_in_hours:
+    type: string
+    default: "1"
+    description: "Cluster Expiration Time ( in Hrs )"
+  num_workers:
+    type: string
+    default: "1"
+    description: "Number Of Worker Nodes"
+  namespace:
+    type: string
+    default: "roost-codesapace"
+    description: "Default Namepace"
+  region:
+    type: string
+    default: "ap-northeast-1"
+    description: "Aws Region"
+  disk_size:
+    type: string
+    default: "50"
+    description: "Disk Size"
+  instance_type:
+    type: string
+    default: "t3.large"
+    description: "Instance Type"
+  ami:
+    type: string
+    default: "ubuntu focal 20.04"
+    description: "Ami"
+  ent_server:
+    type: string
+    default: "app.roost.ai"
+    description: "Enterprise Server IP"
+
+steps:
+  - run:
+      environment:
+        PARAM_ROOST_AUTH_TOKEN: << paramerters.roost_auth_token >>
+        PARAM_EMAIL: << paramerters.email >>
+        PARAM_ALIAS: << paramerters.alias >>
+        PARAM_PREEMPTIBLE: << paramerters.preemptible >>
+        PARAM_K8S_VERSION: << paramerters.k8s_version >>
+        PARAM_CLUSTER_EXPIRY: << paramerters.cluster_expires_in_hours >>
+        PARAM_NUM_WORKERS: << paramerters.num_workers >>
+        PARAM_NAMESPACE: << paramerters.namespace >>
+        PARAM_REGION: << paramerters.region >>
+        PARAM_DISK_SIZE: << paramerters.disk_size >>
+        PARAM_INSTANCE_TYPE: << paramerters.instance_type >>
+        PARAM_AMI: << paramerters.ami >>
+        PARAM_ENT_SERVER: << paramerters.ent_server >>
+
+      name: Creating a roost cluster with specified paramerters
+      command: <<include(scripts/CreateCluster.sh)>>
