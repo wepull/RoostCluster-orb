@@ -17,7 +17,7 @@ jobs:
       - checkout
       # Run your orb's commands to validate them.
       - roost-orb-test-1/createcluster:
-          alias: <alias>
+          alias: <<alias>>
           
 
 workflows:
