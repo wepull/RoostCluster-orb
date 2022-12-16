@@ -16,6 +16,9 @@ jobs:
     steps:
       - checkout
       # Run your orb's commands to validate them.
+      - roost-orb-test-1/createcluster:
+          email: "vipul.choudhary@zb.io"
+          alias: ""
           
 workflows:
   test-deploy:
