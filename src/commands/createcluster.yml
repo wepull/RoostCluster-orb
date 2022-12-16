@@ -57,6 +57,7 @@ parameters:
 steps:
   - run:
       environment:
+        TEST: "test"
         ROOST_AUTH_TOKEN: <<parameters.roost_auth_token>>
         EMAIL: <<parameters.email>>
         ALIAS: <<parameters.alias>>
