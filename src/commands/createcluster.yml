@@ -2,8 +2,9 @@ description: >
   Create a roost cluster.
 parameters:
   roost_auth_token:
-    type: string
-    description: "Roost Authorization Token"
+    type: env_var_name
+    default: "ROOST_AUTH_TOKEN"
+    description: "Roost Authorization Token, name of the environment variable having the roost auth token, e.g. ROOST_AUTH_TOKEN"
   email:
     type: string
     description: "User Email"
