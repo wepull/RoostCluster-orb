@@ -1,7 +1,7 @@
 version: 2.1
 
 description: >
-  Sample orb description
+  The Roost orb allows creation of and interaction with roost clusters in circleCI.
 # What will your orb allow users to accomplish?
 # Descriptions should be short, simple, and informative.
 
