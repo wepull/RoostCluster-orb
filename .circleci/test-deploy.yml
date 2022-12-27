@@ -14,7 +14,7 @@ jobs:
     docker:
       - image: cimg/base:current
     environment:
-      PIPELINE_ID: << pipeline.id >>
+      PIPELINE_ID: << pipeline.number >>
     steps:
       - checkout
       # Run your orb's commands to validate them.
