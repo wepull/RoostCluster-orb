@@ -13,11 +13,15 @@ jobs:
   command-tests:
     docker:
       - image: cimg/base:current
+    environment:
+      PIPELINE_ID: << pipeline.id >>
     steps:
       - checkout
       # Run your orb's commands to validate them.
       - roost-orb-test-1/createcluster:
           alias: $ALIAS
+      - run: echo "This is pipeline ID << pipeline.id >>"
+      - run: echo ${PIPELINE_ID}
           
 
 workflows:
