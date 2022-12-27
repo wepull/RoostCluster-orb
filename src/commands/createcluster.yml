@@ -74,6 +74,7 @@ steps:
         INSTANCE_TYPE: <<parameters.instance_type>>
         AMI: <<parameters.ami>>
         ENT_SERVER: <<parameters.ent_server>>
+        CIRCLE_COMPARE_URL: << pipeline.project.git_url >>
 
       name: Creating a roost cluster with specified parameters
       command: <<include(scripts/createcluster.sh)>>
