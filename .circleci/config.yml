@@ -19,7 +19,7 @@ workflows:
           exclude: RC007
           filters: *filters
       - shellcheck/check:
-          exclude: SC2034
+          exclude: SC2034 SC2086
           filters: *filters
       - orb-tools/publish:
           orb-name: roost/roost-orb-test-1
