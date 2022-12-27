@@ -2,19 +2,6 @@
 ROOST_DIR="/var/tmp/Roost"
 LOG_FILE="${ROOST_DIR}/cluster.log"
 
-DISK_SIZE="50"
-ROOST_AUTH_TOKEN="cd2b9e20-e50c-474e-977f-3ab3e86c3777"
-NAMESPACE="roost-codespace"
-EMAIL="vipul.choudhary@zb.io"
-K8S_VERSION="1.22.2"
-NUM_WORKERS="1"
-PREEMPTIBLE="false"
-CLUSTER_EXPIRY="1"
-REGION="us-west-1"
-INSTANCE_TYPE="t3.large"
-AMI="ubuntu focal 20.04"
-ENT_SERVER="app.roost.ai"
-
 pre_checks() {
   ROOT_DISK_SIZE="${DISK_SIZE}GB"
   KUBE_DIR="/home/vscode/.kube"
