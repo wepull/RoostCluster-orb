@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo ${ROOST-TOKEN}
+echo ${!ROOST-TOKEN}
