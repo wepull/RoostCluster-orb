@@ -14,7 +14,7 @@ create_cluster() {
   RESPONSE_CODE=$(curl --location --request POST "https://${ENT_SERVER}/api/application/client/launchCluster" \
   --header "Content-Type: application/json" \
   --data-raw "{
-    \"roost_auth_token\": \"${ROOST_AUTH_TOKEN}\",
+    \"roost_auth_token\": \"${<< parameters.roost_auth_token >>}\",
     \"alias\": \"${ALIAS}\",
     \"namespace\": \"${NAMESPACE}\",
     \"customer_email\": \"${EMAIL}\",
@@ -109,4 +109,4 @@ fi
 
 main "$*" > ${ROOST_DIR}/roost.log 2>&1
 echo "Logs are at ${ROOST_DIR}/roost.log"
-echo $ROOST_AUTH_TOKEN
+echo ${<< parameters.roost_auth_token >>}
