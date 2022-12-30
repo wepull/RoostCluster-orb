@@ -2,7 +2,7 @@
 ROOST_DIR="/var/tmp/Roost"
 LOG_FILE="$ROOST_DIR/cluster.log"
 
-
+echo $ROOST_AUTH
 
 trigger_eaas() {
   TRIGGER_IDS=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/triggerEaasFromCircleCI" \
