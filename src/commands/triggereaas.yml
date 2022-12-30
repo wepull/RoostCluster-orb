@@ -2,13 +2,13 @@ description:
   Trigger Roost EAAS from circleci
 parameters:
   roost-auth-token:
-    type: string
-    default: ${ROOST_AUTH_TOKEN}
-    description: Roost Authorization Token
+    type: env_var_name
+    default: ROOST_AUTH_TOKEN
+    description: "Roost Authorization Token"
 
 steps:
   - run:
       environment:
-        ORB_ENV_ROOST_TOKEN: << parameters.roost-auth-token >>
+        ROOST_AUTH: <<parameters.roost-auth-token>>
       name: Triggering an EAAS workflow in roost.
       command: <<include(scripts/triggereaas.sh)>>
