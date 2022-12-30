@@ -79,10 +79,3 @@ get_eaas_status() {
 main() {
   trigger_eaas
 }
-
-if [ ! -d "$ROOST_DIR" ]; then
-   mkdir -p $ROOST_DIR
-fi
-
-main $* > $ROOST_DIR/roost.log 2>&1
-echo "Logs are at $ROOST_DIR/roost.log"
