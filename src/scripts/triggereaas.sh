@@ -32,7 +32,7 @@ get_eaas_status() {
   STATUS=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/client/git/eaas/getStatus" \
   --header "Content-Type: application/json" \
   --data-raw "{
-    \"app_user_id\" : \"$ROOST_AUTH_TOKEN\",
+    \"app_user_id\" : \"$ROOST_AUTH\",
     \"trigger_id\" : \"$TRIGGER_ID\"
   }" | jq -r '.current_status')
 
