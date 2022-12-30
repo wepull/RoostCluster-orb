@@ -1,14 +1,6 @@
 #!/bin/bash
-
-#echo $ROOST_AUTH_TOKEN
-#echo $PIPELINE_PROJECT_TYPE
-#echo $CIRCLE_PR_REPONAME
-#echo $CIRCLE_BRANCH
-#echo $CIRCLE_WORKFLOW_ID
-#echo $CIRCLE_PR_USERNAME
-
-#ROOST_DIR="/var/tmp/Roost"
-#LOG_FILE="$ROOST_DIR/cluster.log"
+ROOST_DIR="/var/tmp/Roost"
+LOG_FILE="$ROOST_DIR/cluster.log"
 
 
 
@@ -18,12 +10,12 @@ trigger_eaas() {
   --data-raw "{
     \"app_user_id\": \"$ROOST_AUTH_TOKEN\",
     \"application_name\": \"eaastest\",
-    \"git_type\": \"github\",
+    \"git_type\": \"$PIPELINE_PROJECT_TYPE\",
     \"repo_id\": \"\",
-    \"full_repo_name\": \"wepull/RoostCluster-orb\",
+    \"full_repo_name\": \"$CIRCLE_PR_REPONAME\",
     \"branch\": \"$CIRCLE_BRANCH\",
     \"circle_workflow_id\": \"$CIRCLE_WORKFLOW_ID\",
-    \"user_name\": \"wepull\"
+    \"user_name\": \"$CIRCLE_PR_USERNAME\"
   }" | jq -r '.trigger_ids[0]')
 
   if [ "$TRIGGER_IDS" != "null" ]; then
@@ -74,6 +66,7 @@ get_eaas_status() {
   esac
 
 }
+
 
 main() {
   trigger_eaas
