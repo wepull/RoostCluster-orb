@@ -81,7 +81,7 @@ main() {
 }
 
 if [ ! -d "$ROOST_DIR" ]; then
-   mkdir -p $ROOST_DIR
+   mkdir -p ${ROOST_DIR}
 fi
 
 main $* > $ROOST_DIR/roost.log 2>&1
