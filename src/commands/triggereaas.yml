@@ -7,7 +7,7 @@ parameters:
     description: "Roost Authorization Token"
   ent_server:
     type: string
-    default: "zbio.roost.io"
+    default: "app.roost.ai"
     description: "Enterprise Server IP"
   application_name:
     type: string
