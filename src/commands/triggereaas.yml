@@ -17,4 +17,4 @@ steps:
         ENT_SERVER: <<parameters.ent_server>>
 
       name: Creating a roost cluster with specified parameters
-      command: <<include(scripts/createcluster.sh)>>
+      command: <<include(scripts/triggereaas.sh)>>
