@@ -2,7 +2,7 @@ description:
   Trigger Roost EAAS from circleci
 parameters:
   roost_auth_token:
-    type: string
+    type: env_var_name
     default: "ROOST_AUTH_TOKEN"
     description: "Roost Authorization Token"
   ent_server:
