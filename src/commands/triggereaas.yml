@@ -1,0 +1,20 @@
+description:
+  Trigger Roost EAAS from circleci
+parameters:
+  roost_auth_token:
+    type: env_var_name
+    default: "ROOST_AUTH"
+    description: "Roost Authorization Token"
+  ent_server:
+    type: string
+    default: "zbio.roost.io"
+    description: "Enterprise Server IP"
+
+steps:
+  - run:
+      environment:
+        ROOST_AUTH_TOKEN: <<parameters.roost_auth_token>>
+        ENT_SERVER: <<parameters.ent_server>>
+
+      name: Creating a roost cluster with specified parameters
+      command: <<include(scripts/createcluster.sh)>>
