@@ -20,10 +20,10 @@ trigger_eaas() {
     \"application_name\": \"eaastest\",
     \"git_type\": \"github\",
     \"repo_id\": \"\",
-    \"full_repo_name\": \"$CIRCLE_PROJECT_REPONAME\",
+    \"full_repo_name\": \"wepull/RoostCluster-orb\",
     \"branch\": \"$CIRCLE_BRANCH\",
     \"circle_workflow_id\": \"$CIRCLE_WORKFLOW_ID\",
-    \"user_name\": \"$CIRCLE_PROJECT_USERNAME\"
+    \"user_name\": \"wepull\"
   }" | jq -r '.trigger_ids[0]')
 
   if [ "$TRIGGER_IDS" != "null" ]; then
@@ -79,3 +79,10 @@ get_eaas_status() {
 main() {
   trigger_eaas
 }
+
+if [ ! -d "$ROOST_DIR" ]; then
+   mkdir -p $ROOST_DIR
+fi
+
+main $* > $ROOST_DIR/roost.log 2>&1
+echo "Logs are at $ROOST_DIR/roost.log"
