@@ -12,12 +12,20 @@ parameters:
   application_name:
     type: string
     description: "Name Of The Application"
+  pipeline_project_type:
+    type: string
+    enum:
+      - "github"
+      - "bitbucket"
+    default: "github"
+    description: "The lower-case name of the VCS provider"
 
 steps:
   - run:
       environment:
         ROOST_AUTH_TOKEN: <<parameters.roost_auth_token>>
         ENT_SERVER: <<parameters.ent_server>>
+        PIPELINE_PROJECT_TYPE: <<parameters.pipeline_project_type>>
 
       name: Creating a roost cluster with specified parameters
       command: <<include(scripts/triggereaas.sh)>>

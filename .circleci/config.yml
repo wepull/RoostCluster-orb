@@ -8,9 +8,6 @@ filters: &filters
   tags:
     only: /.*/
 
-environment:
-  $PIPELINE_PROJECT_TYPE: <<pipeline.project.type>>
-
 workflows:
   lint-pack:
     jobs:
