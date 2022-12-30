@@ -2,13 +2,13 @@
 ROOST_DIR="/var/tmp/Roost"
 LOG_FILE="$ROOST_DIR/cluster.log"
 
-
+ORB_ROOST_AUTH=$(eval echo "${ROOST_AUTH}")
 
 trigger_eaas() {
   TRIGGER_IDS=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/triggerEaasFromCircleCI" \
   --header "Content-Type: application/json" \
   --data-raw "{
-    \"app_user_id\": \"${ROOST_AUTH}\",
+    \"app_user_id\": \"${ORB_ROOST_AUTH}\",
     \"application_name\": \"$APPLICATION_NAME\",
     \"git_type\": \"$PIPELINE_PROJECT_TYPE\",
     \"repo_id\": \"\",
@@ -32,7 +32,7 @@ get_eaas_status() {
   STATUS=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/client/git/eaas/getStatus" \
   --header "Content-Type: application/json" \
   --data-raw "{
-    \"app_user_id\" : \"$ROOST_AUTH\",
+    \"app_user_id\" : \"${ORB_ROOST_AUTH}\",
     \"trigger_id\" : \"$TRIGGER_ID\"
   }" | jq -r '.current_status')
 
@@ -79,7 +79,7 @@ fi
 main $* > $ROOST_DIR/roost.log 2>&1
 echo "Logs are at $ROOST_DIR/roost.log"
 echo $ENT_SERVER
-echo $ROOST_AUTH
+echo ${ORB_ROOST_AUTH}
 echo $APPLICATION_NAME
 echo $PIPELINE_PROJECT_TYPE
 echo "$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
