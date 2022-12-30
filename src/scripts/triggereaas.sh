@@ -9,7 +9,7 @@ trigger_eaas() {
   --header "Content-Type: application/json" \
   --data-raw "{
     \"app_user_id\": \"$ROOST_AUTH_TOKEN\",
-    \"application_name\": \"rahultest291222\",
+    \"application_name\": \"eaastest\",
     \"git_type\": \"$PIPELINE_PROJECT_TYPE\",
     \"repo_id\": \"\",
     \"full_repo_name\": \"$CIRCLE_PR_REPONAME\",
