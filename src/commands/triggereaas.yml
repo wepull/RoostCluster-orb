@@ -1,32 +1,14 @@
 description:
   Trigger Roost EAAS from circleci
 parameters:
-  roost_auth_token:
+  roost-auth-token:
     type: env_var_name
     default: ROOST_AUTH_TOKEN
     description: "Roost Authorization Token"
-  ent_server:
-    type: string
-    default: "app.roost.ai"
-    description: "Enterprise Server IP"
-  application_name:
-    type: string
-    description: "Name Of The Application"
-  pipeline_project_type:
-    type: string
-    enum:
-      - "github"
-      - "bitbucket"
-    default: "github"
-    description: "The lower-case name of the VCS provider"
 
 steps:
   - run:
       environment:
-        ROOST_AUTH_TOKEN: <<parameters.roost_auth_token>>
-        ENT_SERVER: <<parameters.ent_server>>
-        PIPELINE_PROJECT_TYPE: <<parameters.pipeline_project_type>>
-        APPLICATION_NAME: <<parameters.application_name>>
-
+        ROOST-TOKEN: <<parameters.roost-auth-token>>
       name: Triggering an EAAS workflow in roost.
       command: <<include(scripts/triggereaas.sh)>>
