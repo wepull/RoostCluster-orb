@@ -73,7 +73,6 @@ steps:
         INSTANCE_TYPE: <<parameters.instance_type>>
         AMI: <<parameters.ami>>
         ENT_SERVER: <<parameters.ent_server>>
-        PPT: <<pipeline.project.type>>
 
       name: Creating a roost cluster with specified parameters
       command: <<include(scripts/createcluster.sh)>>

@@ -8,6 +8,9 @@ filters: &filters
   tags:
     only: /.*/
 
+environment:
+  PPT: <<pipeline.project.type>>
+
 workflows:
   lint-pack:
     jobs:
@@ -36,4 +39,4 @@ workflows:
           requires: [orb-tools/publish]
           filters: *filters
 
-# VS Code Extension Version: 1.4.0
+# VS Code Extension Version: 1.5.1
