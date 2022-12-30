@@ -3,7 +3,7 @@ description:
 parameters:
   roost_auth_token:
     type: env_var_name
-    default: "ROOST_AUTH"
+    default: "ROOST_AUTH_TOKEN"
     description: "Roost Authorization Token"
   ent_server:
     type: string

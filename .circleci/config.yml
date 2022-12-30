@@ -8,6 +8,9 @@ filters: &filters
   tags:
     only: /.*/
 
+environment:
+  $PIPELINE_PROJECT_TYPE: <<pipeline.project.type>>
+
 workflows:
   lint-pack:
     jobs:
@@ -19,7 +22,7 @@ workflows:
           exclude: RC007
           filters: *filters
       - shellcheck/check:
-          exclude: SC2034
+          exclude: SC2034 SC2086
           filters: *filters
       - orb-tools/publish:
           orb-name: roost/roost-orb-test-1
@@ -36,4 +39,4 @@ workflows:
           requires: [orb-tools/publish]
           filters: *filters
 
-# VS Code Extension Version: 1.4.0
+# VS Code Extension Version: 1.5.1

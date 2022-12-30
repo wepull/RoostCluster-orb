@@ -13,12 +13,12 @@ jobs:
   command-tests:
     docker:
       - image: cimg/base:current
+    environment:
+      $PIPELINE_PROJECT_TYPE: <<pipeline.project.type>>
     steps:
       - checkout
       # Run your orb's commands to validate them.
-      - roost-orb-test-1/createcluster:
-          email: "vipul.choudhary@zb.io"
-          alias: "aalias"
+      - roost-orb-test-1/triggereaas
           
 workflows:
   test-deploy:
@@ -42,4 +42,4 @@ workflows:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
 
-# VS Code Extension Version: 1.4.0
+# VS Code Extension Version: 1.5.1

@@ -2,7 +2,6 @@
 ROOST_DIR="/var/tmp/Roost"
 LOG_FILE="$ROOST_DIR/cluster.log"
 
-# pipeline_project_type="github"
 
 
 trigger_eaas() {
@@ -11,7 +10,7 @@ trigger_eaas() {
   --data-raw "{
     \"app_user_id\": \"$ROOST_AUTH_TOKEN\",
     \"application_name\": \"rahultest291222\",
-    \"git_type\": \"$pipeline_project_type\",
+    \"git_type\": \"$PIPELINE_PROJECT_TYPE\",
     \"repo_id\": \"\",
     \"full_repo_name\": \"$CIRCLE_PR_REPONAME\",
     \"branch\": \"$CIRCLE_BRANCH\",
