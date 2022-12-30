@@ -9,6 +9,6 @@ parameters:
 steps:
   - run:
       environment:
-        ROOST_TOKEN: << parameters.roost-auth-token >>
+        ORB_ENV_ROOST_TOKEN: << parameters.roost-auth-token >> 
       name: Triggering an EAAS workflow in roost.
       command: <<include(scripts/triggereaas.sh)>>

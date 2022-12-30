@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo ${ROOST_TOKEN}
+echo ${ORB_ENV_ROOST_TOKEN}
