@@ -16,7 +16,7 @@ trigger_eaas() {
     \"branch\": \"$CIRCLE_BRANCH\",
     \"circle_workflow_id\": \"$CIRCLE_WORKFLOW_ID\",
     \"user_name\": \"$CIRCLE_PROJECT_USERNAME\"
-  }" | jq -r '.trigger_ids[0]')
+  }" | jq -r '.')
 
   if [ "$TRIGGER_IDS" != "null" ]; then
     echo "Triggered Eaas Successfully."
