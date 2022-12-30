@@ -5,17 +5,25 @@ LOG_FILE="$ROOST_DIR/cluster.log"
 
 
 trigger_eaas() {
+  echo $ENT_SERVER
+  echo $ROOST_AUTH_TOKEN
+  echo $APPLICATION_NAME
+  echo $PIPELINE_PROJECT_TYPE
+  echo $CIRCLE_PROJECT_REPONAME
+  echo $CIRCLE_BRANCH
+  echo $CIRCLE_WORKFLOW_ID
+  echo $CIRCLE_PROJECT_USERNAME
   TRIGGER_IDS=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/triggerEaasFromCircleCI" \
   --header "Content-Type: application/json" \
   --data-raw "{
     \"app_user_id\": \"$ROOST_AUTH_TOKEN\",
-    \"application_name\": \"eaastest\",
+    \"application_name\": \"$APPLICATION_NAME\",
     \"git_type\": \"$PIPELINE_PROJECT_TYPE\",
     \"repo_id\": \"\",
-    \"full_repo_name\": \"$CIRCLE_PR_REPONAME\",
+    \"full_repo_name\": \"$CIRCLE_PROJECT_REPONAME\",
     \"branch\": \"$CIRCLE_BRANCH\",
     \"circle_workflow_id\": \"$CIRCLE_WORKFLOW_ID\",
-    \"user_name\": \"$CIRCLE_PR_USERNAME\"
+    \"user_name\": \"$CIRCLE_PROJECT_USERNAME\"
   }" | jq -r '.trigger_ids[0]')
 
   if [ "$TRIGGER_IDS" != "null" ]; then

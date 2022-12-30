@@ -9,6 +9,9 @@ parameters:
     type: string
     default: "zbio.roost.io"
     description: "Enterprise Server IP"
+  application_name:
+    type: string
+    description: "Name Of The Application"
 
 steps:
   - run:
