@@ -19,7 +19,6 @@ jobs:
       - roost-orb-test-1/triggereaas:
           ent_server: "zbio.roost.io"
           application_name: "eaastest"
-          roost_auth_token: $ROOST_AUTH_TOKEN
           
 workflows:
   test-deploy:
