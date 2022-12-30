@@ -8,7 +8,7 @@ trigger_eaas() {
   TRIGGER_IDS=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/triggerEaasFromCircleCI" \
   --header "Content-Type: application/json" \
   --data-raw "{
-    \"app_user_id\": \"${!ROOST_AUTH_TOKEN}\",
+    \"app_user_id\": \"$$ROOST_AUTH_TOKEN\",
     \"application_name\": \"$APPLICATION_NAME\",
     \"git_type\": \"$PIPELINE_PROJECT_TYPE\",
     \"repo_id\": \"\",
@@ -79,7 +79,7 @@ fi
 main $* > $ROOST_DIR/roost.log 2>&1
 echo "Logs are at $ROOST_DIR/roost.log"
 echo $ENT_SERVER
-echo ${!ROOST_AUTH_TOKEN}
+echo $$ROOST_AUTH_TOKEN
 echo $APPLICATION_NAME
 echo $PIPELINE_PROJECT_TYPE
 echo "$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
