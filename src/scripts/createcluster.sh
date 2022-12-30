@@ -51,7 +51,7 @@ get_kubeconfig() {
   KUBECONFIG=$(curl --location --request POST "https://${ENT_SERVER}/api/application/cluster/getKubeConfig" \
   --header "Content-Type: application/json" \
   --data-raw "{
-    \"app_user_id\" : \"${ROOST_AUTH_TOKEN}\",
+    \"app_user_id\" : \"${<< parameters.roost_auth_token >>}\",
     \"cluster_alias\" : \"${ALIAS}\"
   }" | jq -r '.kubeconfig')
 
