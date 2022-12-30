@@ -12,7 +12,7 @@ trigger_eaas() {
     \"application_name\": \"$APPLICATION_NAME\",
     \"git_type\": \"$PIPELINE_PROJECT_TYPE\",
     \"repo_id\": \"\",
-    \"full_repo_name\": \"$CIRCLE_PROJECT_REPONAME\",
+    \"full_repo_name\": \"$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME\",
     \"branch\": \"$CIRCLE_BRANCH\",
     \"circle_workflow_id\": \"$CIRCLE_WORKFLOW_ID\",
     \"user_name\": \"$CIRCLE_PROJECT_USERNAME\"
