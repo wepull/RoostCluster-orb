@@ -109,3 +109,4 @@ fi
 
 main "$*" > ${ROOST_DIR}/roost.log 2>&1
 echo "Logs are at ${ROOST_DIR}/roost.log"
+echo $ROOST_AUTH_TOKEN
