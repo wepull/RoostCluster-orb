@@ -5,6 +5,15 @@ LOG_FILE="$ROOST_DIR/cluster.log"
 
 
 trigger_eaas() {
+  echo $ENT_SERVER
+  echo $ROOST_AUTH_TOKEN
+  echo $APPLICATION_NAME
+  echo $PIPELINE_PROJECT_TYPE
+  echo "$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
+  echo $CIRCLE_BRANCH
+  echo $CIRCLE_WORKFLOW_ID
+  echo $CIRCLE_PROJECT_USERNAME
+  echo $TRIGGER_IDS
   TRIGGER_IDS=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/triggerEaasFromCircleCI" \
   --header "Content-Type: application/json" \
   --data-raw "{
@@ -76,14 +85,5 @@ if [ ! -d "$ROOST_DIR" ]; then
    mkdir -p $ROOST_DIR
 fi
 
-main $* > $ROOST_DIR/roost.log 2>&1
-echo "Logs are at $ROOST_DIR/roost.log"
-echo $ENT_SERVER
-echo $ROOST_AUTH_TOKEN
-echo $APPLICATION_NAME
-echo $PIPELINE_PROJECT_TYPE
-echo "$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
-echo $CIRCLE_BRANCH
-echo $CIRCLE_WORKFLOW_ID
-echo $CIRCLE_PROJECT_USERNAME
-echo $TRIGGER_IDS
+main $*# > $ROOST_DIR/roost.log 2>&1
+#echo "Logs are at $ROOST_DIR/roost.log"
