@@ -21,7 +21,7 @@ jobs:
       #    application_name: "eaastest"
       - roost-orb-test-1/createcluster:
           email: "vipul.choudhary@zb.io"
-          alias: "test"          
+          alias: ""          
 workflows:
   test-deploy:
     jobs:
