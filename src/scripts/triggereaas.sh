@@ -1,5 +1,6 @@
 #!/bin/bash
-ROOST_AUTH_TOKEN=$(eval echo $ROOST_AUTH)
+ROOST_AUTH_TOKEN=$(eval echo $$ROOST_AUTH)
+
 
 pre_checks() {
   if [ -z "$ROOST_AUTH_TOKEN" ]; then
