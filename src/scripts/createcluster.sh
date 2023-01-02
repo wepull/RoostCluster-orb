@@ -1,12 +1,13 @@
 #!/bin/bash
-ROOST_DIR="/var/tmp/Roost"
-LOG_FILE="${ROOST_DIR}/cluster.log"
-
 ORB_ROOST_AUTH_TOKEN=$(eval "echo \"\$$ROOST_AUTH_TOKEN\"")
 
 pre_checks() {
+  if [ -z "$ORB_ROOST_AUTH_TOKEN" ]; then
+    echo "The ROOST_AUTH_TOKEN is not found. Please add the ROOST_AUTH_TOKEN as an environment variable in CicleCI before continuing."
+    exit 1
+  fi
+
   ROOT_DISK_SIZE="${DISK_SIZE}GB"
-  KUBE_DIR="/home/vscode/.kube"
   if [ -z "${ALIAS}" ]; then
     ALIAS=$(date +%s)
   fi
@@ -31,84 +32,36 @@ create_cluster() {
   }" | jq -r '.ResponseCode')
 
   if [ "${RESPONSE_CODE}" -eq 0 ]; then
-    sleep 5m
-    for i in {1..10}
-    do
-      if [ ! -s ${KUBE_DIR}/config ]; then
-        echo "$i sleeping now for 30s"
-        sleep 30
-        get_kubeconfig
-      fi
-    done
+    get_kubeconfig
   else
     echo "Failed to launch cluster. please try again"
   fi
 }
 
 get_kubeconfig() {
-  if [ ! -d "${KUBE_DIR}" ]; then
-    mkdir -p ${KUBE_DIR}
-  fi
+  sleep 5m
+  for i in {1..10}
+  do
+    KUBECONFIG=$(curl --location --request POST "https://${ENT_SERVER}/api/application/cluster/getKubeConfig" \
+    --header "Content-Type: application/json" \
+    --data-raw "{
+      \"app_user_id\" : \"${ORB_ROOST_AUTH_TOKEN}\",
+      \"cluster_alias\" : \"${ALIAS}\"
+    }" | jq -r '.kubeconfig')
 
-  KUBECONFIG=$(curl --location --request POST "https://${ENT_SERVER}/api/application/cluster/getKubeConfig" \
-  --header "Content-Type: application/json" \
-  --data-raw "{
-    \"app_user_id\" : \"${<< parameters.roost_auth_token >>}\",
-    \"cluster_alias\" : \"${ALIAS}\"
-  }" | jq -r '.kubeconfig')
-
-  if [ "${KUBECONFIG}" != "null" ]; then
-    echo "Kubconfig retrieved successfully"
-    echo "${KUBECONFIG}" >> "${KUBE_DIR}/config"
-  fi
-}
-
-write_stop_cmd() {
-
-  cat > /usr/local/bin/roost \
-<< EOF
-ACTION=\$*
-main() {
-  case \$ACTION in
-    stop)
-      curl --location --request POST "https://${ENT_SERVER}/api/application/client/stopLaunchedCluster" \
-      --header "Content-Type: application/json" \
-      --data-raw "{
-        \"roost_auth_token\": \"${ROOST_AUTH_TOKEN}\",
-        \"alias\": \"${ALIAS}\"
-      }"
-      sudo rm -f "${KUBE_DIR}/config"
-      ;;
-    delete)
-      curl --location --request POST "https://${ENT_SERVER}/api/application/client/deleteLaunchedCluster" \
-      --header "Content-Type: application/json" \
-      --data-raw "{
-        \"roost_auth_token\": \"${ROOST_AUTH_TOKEN}\",
-        \"alias\": \"${ALIAS}\"
-      }"
-      sudo rm -f "${KUBE_DIR}/config"
-      ;;
-    *)
-      echo "Please try with valid parameter - stop or delete"
-    ;;
-  esac
-}
-main
-EOF
-
-chmod +x /usr/local/bin/roost
+    if [ "${KUBECONFIG}" == "null" ]; then
+      echo "$i sleeping now for 30s"
+      sleep 30
+    else
+      echo "Cluster created successfully."
+      break
+    fi
+  done
 }
 
 main() {
   pre_checks
   create_cluster
-  write_stop_cmd
 }
 
-if [ ! -d "${ROOST_DIR}" ]; then
-   mkdir -p ${ROOST_DIR}
-fi
-
-main "$*" > ${ROOST_DIR}/roost.log 2>&1
-echo "Logs are at ${ROOST_DIR}/roost.log"
-echo ${<< parameters.roost_auth_token >>}
+main $*
