@@ -19,7 +19,6 @@ parameters:
       - "bitbucket"
     default: "github"
     description: "The lower-case name of the VCS provider"
-
 steps:
   - run:
       environment:

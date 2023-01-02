@@ -79,14 +79,3 @@ main() {
 }
 
 main $*
-
-# Below echo lines need to be removed after final testing.
-echo $ENT_SERVER
-echo $ROOST_AUTH_TOKEN
-echo $APPLICATION_NAME
-echo $PIPELINE_PROJECT_TYPE
-echo "$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
-echo $CIRCLE_BRANCH
-echo $CIRCLE_WORKFLOW_ID
-echo $CIRCLE_PROJECT_USERNAME
-echo $TRIGGER_IDS
