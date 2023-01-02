@@ -14,7 +14,7 @@ pre_checks() {
 }
 
 create_cluster() {
-  RESPONSE_CODE=$(curl --location --request POST "https://${ENT_SERVER}/api/application/client/launchCluster" \
+  RESPONSE_CODE=$(curl --location --silent --request POST "https://${ENT_SERVER}/api/application/client/launchCluster" \
   --header "Content-Type: application/json" \
   --data-raw "{
     \"roost_auth_token\": \"$ORB_ROOST_AUTH_TOKEN\",
@@ -42,7 +42,7 @@ get_kubeconfig() {
   sleep 5m
   for i in {1..10}
   do
-    KUBECONFIG=$(curl --location --request POST "https://${ENT_SERVER}/api/application/cluster/getKubeConfig" \
+    KUBECONFIG=$(curl --location --silent --request POST "https://${ENT_SERVER}/api/application/cluster/getKubeConfig" \
     --header "Content-Type: application/json" \
     --data-raw "{
       \"app_user_id\" : \"${ORB_ROOST_AUTH_TOKEN}\",
