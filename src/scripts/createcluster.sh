@@ -2,6 +2,8 @@
 ROOST_DIR="/var/tmp/Roost"
 LOG_FILE="${ROOST_DIR}/cluster.log"
 
+ORB_ROOST_AUTH_TOKEN=$(eval "echo \"\$$ROOST_AUTH_TOKEN\"")
+
 pre_checks() {
   ROOT_DISK_SIZE="${DISK_SIZE}GB"
   KUBE_DIR="/home/vscode/.kube"
@@ -14,7 +16,7 @@ create_cluster() {
   RESPONSE_CODE=$(curl --location --request POST "https://${ENT_SERVER}/api/application/client/launchCluster" \
   --header "Content-Type: application/json" \
   --data-raw "{
-    \"roost_auth_token\": \"${<< parameters.roost_auth_token >>}\",
+    \"roost_auth_token\": \"$ORB_ROOST_AUTH_TOKEN\",
     \"alias\": \"${ALIAS}\",
     \"namespace\": \"${NAMESPACE}\",
     \"customer_email\": \"${EMAIL}\",
