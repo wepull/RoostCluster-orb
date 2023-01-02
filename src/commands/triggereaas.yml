@@ -23,7 +23,7 @@ parameters:
 steps:
   - run:
       environment:
-        ROOST_AUTH: <<parameters.roost_auth_token>>
+        ROOST_AUTH_TOKEN: <<parameters.roost_auth_token>>
         ENT_SERVER: <<parameters.ent_server>>
         PIPELINE_PROJECT_TYPE: <<parameters.pipeline_project_type>>
         APPLICATION_NAME: <<parameters.application_name>>

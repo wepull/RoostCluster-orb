@@ -1,5 +1,4 @@
 #!/bin/bash
-ROOST_AUTH_TOKEN=$(eval echo $$ROOST_AUTH)
 
 
 pre_checks() {
@@ -13,7 +12,7 @@ trigger_eaas() {
   TRIGGER_IDS=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/triggerEaasFromCircleCI" \
   --header "Content-Type: application/json" \
   --data-raw "{
-    \"app_user_id\": \"$ROOST_AUTH_TOKEN\",
+    \"app_user_id\": \"\$$ROOST_AUTH_TOKEN\",
     \"application_name\": \"$APPLICATION_NAME\",
     \"git_type\": \"$PIPELINE_PROJECT_TYPE\",
     \"repo_id\": \"\",
