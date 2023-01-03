@@ -35,6 +35,7 @@ create_cluster() {
     get_kubeconfig
   else
     echo "Failed to launch cluster. please try again"
+    exit 1
   fi
 }
 
