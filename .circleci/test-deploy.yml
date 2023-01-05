@@ -16,8 +16,8 @@ jobs:
     steps:
       - checkout
       # Run your orb's commands to validate them.
-      - roost-orb-test-1/createcluster:
-          email: "vipul.choudhary@zb.io"         
+      - roost-orb-test-1/triggereaas:
+          application_name: "eaastest"         
 workflows:
   test-deploy:
     jobs:
