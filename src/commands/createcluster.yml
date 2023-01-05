@@ -3,7 +3,7 @@ description: >
 parameters:
   roost_auth_token:
     type: env_var_name
-    default: "APP_ROOST_AUTH"
+    default: "ROOST_AUTH_TOKEN"
     description: "Roost Authorization Token, name of the environment variable having the roost auth token, e.g. ROOST_AUTH_TOKEN"
   email:
     type: string
