@@ -1,5 +1,6 @@
 #!/bin/bash
 ORB_ROOST_AUTH_TOKEN=$(eval "echo \"\$$ROOST_AUTH_TOKEN\"")
+ENT_SERVER=$(eval "echo \"\$$ENT_SRVR\"")
 
 pre_checks() {
   if [ -z "$ORB_ROOST_AUTH_TOKEN" ]; then
@@ -14,6 +15,7 @@ pre_checks() {
 }
 
 create_cluster() {
+  echo $ENT_SERVER
   RESPONSE_CODE=$(curl --location --silent --request POST "https://${ENT_SERVER}/api/application/client/launchCluster" \
   --header "Content-Type: application/json" \
   --data-raw "{
