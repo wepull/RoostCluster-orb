@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  <orb-name>: <namespace>/<orb-name>@dev:<<pipeline.git.revision>>
+  <orb-name>: roost/roost-orb-test-1@dev:<<pipeline.git.revision>>
   orb-tools: circleci/orb-tools@11.5
 
 filters: &filters
@@ -39,4 +39,4 @@ workflows:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
 
-# VS Code Extension Version: 1.4.0
+# VS Code Extension Version: 1.5.1
