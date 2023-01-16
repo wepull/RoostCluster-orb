@@ -7,6 +7,7 @@ parameters:
     description: "Roost Authorization Token, name of the environment variable having the roost auth token, e.g. ROOST_AUTH_TOKEN"
   email:
     type: string
+    default: "test"
     description: "User Email"
   alias:
     type: string

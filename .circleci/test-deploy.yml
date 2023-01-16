@@ -19,6 +19,7 @@ jobs:
       - roost-orb-test-1/triggereaas
       - run:
           echo ${FOO}
+      - roost-orb-test-1/createcluster
 
 workflows:
   test-deploy:
