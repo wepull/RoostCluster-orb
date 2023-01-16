@@ -18,21 +18,13 @@ jobs:
       # Run your orb's commands to validate them.
       - roost-orb-test-1/triggereaas
       - run:
-          printenv FOO
-  jobdos:
-    docker:
-      - image: cimg/base:current
-    steps:
-      - run:
-          printenv FOO
+          echo ${FOO}
 
 workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       - command-tests:
-          filters: *filters
-      - jobdos:
           filters: *filters
       - orb-tools/pack:
           filters: *filters
