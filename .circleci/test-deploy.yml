@@ -38,6 +38,8 @@ workflows:
       - job1:
           filters: *filters
       - job2:
+          requires:
+            - job1
           filters: *filters
       - orb-tools/pack:
           filters: *filters
