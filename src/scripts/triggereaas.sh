@@ -1,5 +1,4 @@
 #!/bin/bash 
-set -x
 ROOST_AUTH_TOKEN=$(eval "echo \"\$$ORB_ENV_AUTH_TOKEN\"")
 ENT_SERVER=$(eval "echo \"\$$ORB_ENV_ENT_SERVER\"")
 
@@ -30,7 +29,6 @@ trigger_eaas() {
     get_eaas_status "$TRIGGER_IDS"
   else
     echo "Failed to trigger Eaas. Please try again."
-    echo TRIGGER_IDS
     exit 1
   fi
 }
@@ -50,7 +48,7 @@ get_eaas_status() {
   fi
 
   case "$INFRA_STATUS" in
-    infra_setup_in_progress)
+    infra_ops_in_progress)
       echo "Infra setup is in progress."
       sleep 30
       get_eaas_status $TRIGGER_ID
