@@ -18,8 +18,6 @@ jobs:
       - run: |
           # verify; optional step
           printenv FOO
-      - run: |
-          cp $BASH_ENV bash.env
       - persist_to_workspace:
           root: .
           paths:
