@@ -14,10 +14,11 @@ jobs:
     docker:
       - image: cimg/base:current
     steps:
-      - roost-orb-test-1/triggereaas
+      - roost-orb-test-1/triggereaas:
+          application_name: orbtest
       - run: |
           # verify; optional step
-          printenv FOO
+          printenv PULUMI_STATE_JSON
       - persist_to_workspace:
           root: .
           paths:
@@ -32,7 +33,7 @@ jobs:
           cat bash.env >> $BASH_ENV
       - run: |
           # verify; this should print 'BAR'
-          printenv FOO
+          printenv PULUMI_STATE_JSON
 
 workflows:
   test-deploy:

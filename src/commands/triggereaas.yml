@@ -10,7 +10,6 @@ parameters:
     description: Name of the environment variable containing the Enterprise Server IP.
   application_name:
     type: string
-    default: "test"
     description: Name Of The Application.
   pipeline_project_type:
     type: string
