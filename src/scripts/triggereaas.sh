@@ -57,8 +57,7 @@ get_eaas_status() {
       for key in $(echo -E "$RESPONSE" | jq -r '.infra_output | keys[]'); do
         if [ "$key" != "INFRA_STATUS" ]; then
           val=$(echo -E "$RESPONSE" | jq -r .infra_output.$key)
-          # export "$key"="$val"
-          echo "export "$key"="$val"" >> $BASH_ENV
+          echo "export $key=$val" >> $BASH_ENV
         fi
       done
       cp $BASH_ENV bash.env
