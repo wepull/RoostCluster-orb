@@ -14,8 +14,7 @@ jobs:
     docker:
       - image: cimg/base:current
     steps:
-      - run: |
-          echo "export FOO=BAR" >> $BASH_ENV
+      - roost-orb-test-1/triggereaas
       - run: |
           # verify; optional step
           printenv FOO
