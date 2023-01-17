@@ -10,36 +10,42 @@ filters: &filters
 jobs:
   # Create a job to test the commands of your orbs.
   # You may want to add additional validation steps to ensure the commands are working as expected.
-  job1:
+  create-env-var:
     docker:
       - image: cimg/base:current
     steps:
-      - roost-orb-test-1/triggereaas
+      - run: |
+          echo "export FOO=BAR" >> $BASH_ENV
+      - run: |
+          # verify; optional step
+          printenv FOO
+      - run: |
+          cp $BASH_ENV bash.env
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: .
           paths:
-            - ./env_vars
-
-  job2:
+            - bash.env
+  load-env-var:
     docker:
       - image: cimg/base:current
     steps:
       - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          command: |
-            source ./env_vars
-            echo $FOO
+          at: .
+      - run: |
+          cat bash.env >> $BASH_ENV
+      - run: |
+          # verify; this should print 'BAR'
+          printenv FOO
 
 workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
-      - job1:
+      - create-env-var:
           filters: *filters
-      - job2:
+      - load-env-var:
           requires:
-            - job1
+            - create-env-var
           filters: *filters
       - orb-tools/pack:
           filters: *filters
