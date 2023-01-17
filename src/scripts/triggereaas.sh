@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/bash 
+set -x
 ROOST_AUTH_TOKEN=$(eval "echo \"\$$ORB_ENV_AUTH_TOKEN\"")
 ENT_SERVER=$(eval "echo \"\$$ORB_ENV_ENT_SERVER\"")
 
@@ -29,6 +30,7 @@ trigger_eaas() {
     get_eaas_status "$TRIGGER_IDS"
   else
     echo "Failed to trigger Eaas. Please try again."
+    echo TRIGGER_IDS
     exit 1
   fi
 }
