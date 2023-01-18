@@ -1,14 +1,14 @@
 #!/bin/bash
 ROOST_AUTH_TOKEN=$(eval "echo \"\$$ORB_ENV_AUTH_TOKEN\"")
 ENT_SERVER=$(eval "echo \"\$$ORB_ENV_ENT_SERVER\"")
-​
+
 pre_checks() {
   if [ -z "$ROOST_AUTH_TOKEN" ]; then
     echo "ROOST_AUTH_TOKEN not found. Please add ROOST_AUTH_TOKEN as an environment variable in CicleCI before continuing."
     exit 1
   fi
 }
-​
+
 trigger_eaas() {
   EAAS_RESPONSE=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/triggerEaasFromCircleCI" \
   --header "Content-Type: application/json" \
@@ -22,7 +22,7 @@ trigger_eaas() {
     \"circle_workflow_id\": \"$CIRCLE_WORKFLOW_ID\",
     \"user_name\": \"$CIRCLE_PROJECT_USERNAME\"
   }")
-​
+
   TRIGGER_IDS=$(echo $EAAS_RESPONSE | jq -r '.trigger_ids[0]')
   ERROR_MSG=$(echo $EAAS_RESPONSE | jq -r '.message')
   if [ "$TRIGGER_IDS" == "null" ]; then
@@ -34,7 +34,7 @@ trigger_eaas() {
     get_eaas_status "$TRIGGER_IDS"
   fi
 }
-​
+
 get_eaas_status() {
   TRIGGER_ID=$1
   RESPONSE=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/client/git/eaas/getStatus" \
@@ -43,12 +43,12 @@ get_eaas_status() {
     \"app_user_id\" : \"${ROOST_AUTH_TOKEN}\",
     \"trigger_id\" : \"$TRIGGER_ID\"
   }")
-​
+
   INFRA_STATUS=$(echo -E "$RESPONSE" | jq -r '.infra_output.INFRA_STATUS')
   if [ -z "$INFRA_STATUS" ]; then
     INFRA_STATUS="infra_setup_in_progress"
   fi
-​
+
   case "$INFRA_STATUS" in
     infra_setup_in_progress)
       echo "Infra setup is in progress."
@@ -97,13 +97,13 @@ get_eaas_status() {
       get_eaas_status $TRIGGER_ID
       ;;
   esac
-​
+
 }
-​
-​
+
+
 main() {
   pre_checks
   trigger_eaas
 }
-​
+
 main $*
