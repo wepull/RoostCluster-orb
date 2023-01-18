@@ -26,7 +26,7 @@ trigger_eaas() {
   TRIGGER_IDS=$(echo $EAAS_RESPONSE | jq -r '.trigger_ids[0]')
   ERROR_MSG=$(echo $EAAS_RESPONSE | jq -r '.message')
   if [ "$TRIGGER_IDS" == "null" ]; then
-    echo "Failed to trigger Eaas.\nReason: ${ERROR_MSG}\nPlease try again."
+    echo "Failed to trigger Eaas. Reason: ${ERROR_MSG}. Please try again."
     exit 1
   else
     echo "Triggered Eaas Successfully."
@@ -50,7 +50,7 @@ get_eaas_status() {
   fi
 
   case "$INFRA_STATUS" in
-    infra_setup_in_progress)
+    infra_ops_in_progress)
       echo "Infra setup is in progress."
       sleep 30
       get_eaas_status $TRIGGER_ID
