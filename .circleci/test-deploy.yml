@@ -14,7 +14,7 @@ jobs:
     docker:
       - image: cimg/base:current
     steps:
-      - roost-orb-test-1/triggereaas:
+      - roost-orb-test-1/trigger-eaas:
           application_name: orbtest
       - run: |
           # verify; optional step
@@ -34,6 +34,12 @@ jobs:
       - run: |
           # verify; this should print 'BAR'
           printenv PULUMI_STATE_JSON
+  create-cluster:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - roost-orb-test-1/create-cluster:
+          email: "support@zb.io"  
 
 workflows:
   test-deploy:
@@ -44,6 +50,8 @@ workflows:
       - load-env-var:
           requires:
             - create-env-var
+          filters: *filters
+      - create-cluster:
           filters: *filters
       - orb-tools/pack:
           filters: *filters

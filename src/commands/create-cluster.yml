@@ -1,66 +1,64 @@
-description: >
-  Create a roost cluster.
+description: Create a Roost K8s Cluster using AWS instances, requires ROOST_AUTH_TOKEN and ROOST_SERVER environment variables to be set.
 parameters:
-  roost_auth_token:
+  auth_token:
     type: env_var_name
-    default: "APP_ROOST_AUTH"
-    description: "Roost Authorization Token, name of the environment variable having the roost auth token, e.g. ROOST_AUTH_TOKEN"
+    default: "ROOST_AUTH_TOKEN"
+    description: Roost Authorization Token, name of the environment variable having the roost auth token, ROOST_AUTH_TOKEN by default.
   email:
     type: string
-    default: "test"
-    description: "User Email"
+    description: User Email.
   alias:
     type: string
+    description: Alias Name, if not provided then a random one will be generated automatically.
     default: ""
-    description: "Alias Name"
   preemptible:
     type: string
     enum:
       - "true"
       - "false"
     default: "false"
-    description: "Preemptible Type"
+    description: Preemptible Type.
   k8s_version:
     type: string
     default: "1.22.2"
-    description: "Kubernetes Version"
+    description: Kubernetes Version.
   cluster_expires_in_hours:
     type: string
     default: "1"
-    description: "Cluster Expiration Time ( in Hrs )"
+    description: Cluster Expiration Time ( in Hrs ).
   num_workers:
     type: string
     default: "1"
-    description: "Number Of Worker Nodes"
+    description: Number Of Worker Nodes.
   namespace:
     type: string
-    default: "roost-codesapace"
-    description: "Default Namepace"
+    default: "roost-circleci"
+    description: Default Namepace.
   region:
     type: string
     default: "us-west-1"
-    description: "Aws Region"
+    description: Aws Region.
   disk_size:
     type: string
     default: "50"
-    description: "Disk Size"
+    description: Disk Size.
   instance_type:
     type: string
     default: "t3.large"
-    description: "Instance Type"
+    description: Instance Type.
   ami:
     type: string
     default: "ubuntu focal 20.04"
-    description: "Ami"
-  ent_server:
+    description: Ami.
+  roost_server:
     type: env_var_name
-    default: "ROOST_ENT_SERVER"
-    description: "Enterprise Server IP"
+    default: "ROOST_SERVER"
+    description: Name of the environment variable containing the Enterprise Server IP. ROOST_SERVER by default.
 
 steps:
   - run:
       environment:
-        ROOST_AUTH_TOKEN: <<parameters.roost_auth_token>>
+        ORB_ENV_AUTH_TOKEN: <<parameters.auth_token>>
         EMAIL: <<parameters.email>>
         ALIAS: <<parameters.alias>>
         PREEMPTIBLE: <<parameters.preemptible>>
@@ -72,7 +70,7 @@ steps:
         DISK_SIZE: <<parameters.disk_size>>
         INSTANCE_TYPE: <<parameters.instance_type>>
         AMI: <<parameters.ami>>
-        ENT_SRVR: <<parameters.ent_server>>
+        ORB_ENV_ENT_SERVER: <<parameters.roost_server>>
 
       name: Creating a roost cluster with specified parameters
       command: <<include(scripts/createcluster.sh)>>

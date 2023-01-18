@@ -3,14 +3,14 @@ parameters:
   auth_token:
     type: env_var_name
     default: "ROOST_AUTH_TOKEN"
-    description: Roost Authorization Token, name of the environment variable having the roost auth token, e.g. ROOST_AUTH_TOKEN.
-  ent_server:
+    description: Roost Authorization Token, name of the environment variable having the roost auth token, ROOST_AUTH_TOKEN by default.
+  roost_server:
     type: env_var_name
     default: "ROOST_SERVER"
-    description: Name of the environment variable containing the Enterprise Server IP.
+    description: Name of the environment variable containing the Enterprise Server IP. ROOST_SERVER by default.
   application_name:
     type: string
-    description: Name Of The Application.
+    description: Name Of The Application set up in roost EAAS, also ensure that the branch set up in the EAAS workflow is same as the branch where CircleCI is set up.
   pipeline_project_type:
     type: string
     enum:
@@ -23,7 +23,7 @@ steps:
   - run:
       environment:
         ORB_ENV_AUTH_TOKEN: <<parameters.auth_token>>
-        ORB_ENV_ENT_SERVER: <<parameters.ent_server>>
+        ORB_ENV_ENT_SERVER: <<parameters.roost_server>>
         PIPELINE_PROJECT_TYPE: <<parameters.pipeline_project_type>>
         APPLICATION_NAME: <<parameters.application_name>>
 
