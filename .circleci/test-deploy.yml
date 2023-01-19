@@ -16,28 +16,11 @@ jobs:
     steps:
       - roost-orb-test-1/trigger-eaas:
           application_name: orbtest
-      - run: |
-          # verify; optional step
-          printenv PULUMI_STATE_JSON
-      - persist_to_workspace:
-          root: .
-          paths:
-            - bash.env
-  load-env-var:
+  create:
     docker:
       - image: cimg/base:current
     steps:
-      - attach_workspace:
-          at: .
-      - run: |
-          cat bash.env >> $BASH_ENV
-      - run: |
-          # verify; this should print 'BAR'
-          printenv PULUMI_STATE_JSON
-  create-cluster:
-    docker:
-      - image: cimg/base:current
-    steps:
+      - checkout
       - roost-orb-test-1/create-cluster:
           email: "support@zb.io"  
 
@@ -45,13 +28,11 @@ workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
+      - create:
+          filters: *filters
       - create-env-var:
-          filters: *filters
-      - load-env-var:
           requires:
-            - create-env-var
-          filters: *filters
-      - create-cluster:
+            - create
           filters: *filters
       - orb-tools/pack:
           filters: *filters
@@ -61,10 +42,12 @@ workflows:
           pub-type: production
           requires:
             - orb-tools/pack
-            - load-env-var
+            - create-env-var
           context: test
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+
+# VS Code Extension Version: 1.5.1
