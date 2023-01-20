@@ -45,7 +45,6 @@ send_endpoint_to_roost() {
     \"trigger_id\": \"$TRIGGER_ID\",
     \"app_user_id\": \"$ROOST_AUTH_TOKEN\"
   }")
-  echo $URL_RESPONSE
 }
 
 get_eaas_status() {
@@ -72,6 +71,7 @@ get_eaas_status() {
       for key in $(echo -E "$RESPONSE" | jq -r '.infra_output | keys[]'); do
         if [ "$key" != "INFRA_STATUS" ]; then
           val=$(echo -E "$RESPONSE" | jq -r .infra_output.$key)
+          export "$key"="$val"
           echo "export '$key'='$val'" >> $BASH_ENV
         fi
       done
