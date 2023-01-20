@@ -1,5 +1,4 @@
-#!/bin/bash
-set -x
+!/bin/bash
 ROOST_AUTH_TOKEN=$(eval "echo \"\$$ORB_ENV_AUTH_TOKEN\"")
 ENT_SERVER=$(eval "echo \"\$$ORB_ENV_ENT_SERVER\"")
 
@@ -36,6 +35,19 @@ trigger_eaas() {
   fi
 }
 
+send_endpoint_to_roost() {
+  TRIGGER_ID=$1
+  URL_RESPONSE=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/client/git/addCircleCIUrl" \
+  --header "Content-Type: application/json" \
+  --data-raw "{
+    \"circleci_build_url\": \"$CIRCLE_BUILD_URL\",
+    \"circleci_loadbalancer_url\": \"$TF_OUTPUT_alb_loadbalancer\",
+    \"trigger_id\": \"$TRIGGER_ID\",
+    \"app_user_id\": \"$ROOST_AUTH_TOKEN\"
+  }")
+  echo $URL_RESPONSE
+}
+
 get_eaas_status() {
   TRIGGER_ID=$1
   RESPONSE=$(curl --location --silent --request POST "https://$ENT_SERVER/api/application/client/git/eaas/getStatus" \
@@ -63,7 +75,9 @@ get_eaas_status() {
           echo "export '$key'='$val'" >> $BASH_ENV
         fi
       done
+      echo "export status='$STATUS'" >> $BASH_ENV
       cp $BASH_ENV bash.env
+      send_endpoint_to_roost $TRIGGER_ID
       echo "Infra setup is completed."
       ;;
     infra_ops_failed)
@@ -86,6 +100,9 @@ get_eaas_status() {
       get_eaas_status $TRIGGER_ID
       ;;
     deploy_completed)
+      echo "export status='$STATUS'" >> $BASH_ENV
+      cp $BASH_ENV bash.env
+      send_endpoint_to_roost $TRIGGER_ID
       echo "Application deployed successfully."
       ;;
     deploy_failed)
